@@ -9,7 +9,7 @@ public class Engine {
 	/*
 	 * SOURCE: https://www.ntu.edu.sg/home/ehchua/programming/java/J8d_Game_Framework.html
 	 */
-	static final int UPDATES_PER_SEC = 8; //updates per second
+	static final int UPDATES_PER_SEC = 4; //updates per second
 	static final int UPDATES_PER_NSEC = (int) (1000000000L / UPDATES_PER_SEC); //updates per nanosecond
 	
 	static boolean gameOver = false;
