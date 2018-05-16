@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
 import java.util.ArrayList;
-
+//checking updates
 public class Move extends JPanel implements ActionListener, KeyListener {
 	Timer t = new Timer(5, this);
 	double x = 0, y = 0, x2 = 0, y2 = 0;
