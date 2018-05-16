@@ -20,7 +20,7 @@ public class Engine {
 	}
 	
 	public static void initializeGame () {
-		
+		//llklk
 		/*
 		 * Creates window and creates a move object.
 		 * 
