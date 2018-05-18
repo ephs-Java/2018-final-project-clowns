@@ -7,7 +7,7 @@ import java.awt.event.*;
 import java.awt.geom.*;
 import java.util.ArrayList;
 import engine.Point;
-//kjhkjh
+//kjhkjhd
 //checking updates
 public class Move extends JPanel implements ActionListener, KeyListener, MouseListener {
 	Timer t = new Timer(100, this);
