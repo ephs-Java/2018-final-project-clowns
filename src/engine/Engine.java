@@ -1,10 +1,7 @@
 package engine;
 
 import java.awt.Component;
-
 import javax.swing.JFrame;
-
-
 import window.Move;
 
 public class Engine {
