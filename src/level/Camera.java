@@ -34,20 +34,20 @@ public class Camera {
             camera3 = new Point(656, 308);
             if ((camera1.getX() - game.player.x - 30) < 0 && (camera1.getX() - game.player.x) > -100
                     && (camera1.getY() - game.player.y - 70) < 0 && (camera1.getY() - game.player.y) > -100) {
-                System.out.println("Danger");
+               // System.out.println("Danger");
                 cTicks += 1;
                 return true;
  
             }
             else if ((camera2.getX() - game.player.x) < 100 && (camera2.getX() - game.player.x) > -100
                     && (camera2.getY() - game.player.y - 70) < 100 && (camera2.getY() - game.player.y) > 0) {
-                System.out.println("Danger");
+               // System.out.println("Danger");
                 cTicks += 1;
                 return true;
             }
             else if ((camera3.getX() - game.player.x) < 100 && (camera3.getX() - game.player.x) > -100
                     && (camera3.getY() - game.player.y - 70) > -100 && (camera3.getY() - game.player.y - 70) < 0) {
-                System.out.println("Danger");
+               // System.out.println("Danger");
                 cTicks += 1;
                 return true;
             }
@@ -72,6 +72,15 @@ public class Camera {
             cTicks = 0;
         }
         return false;
+    }
+    
+    public void updateAlarm() {
+    	if (this.getcTicks() < 1000) {
+			this.isAlarm();
+		} else {
+			game.gui.alarmMessage = "ALARM! ALARM!";
+			game.player.isRobbing = true;
+		}
     }
  
     public void clickInteraction(int x, int y) {

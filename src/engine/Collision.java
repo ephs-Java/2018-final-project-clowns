@@ -4,12 +4,14 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
- 
+
+import level.Point;
 import gfx.SpriteSheet;
  
 public class Collision { // 64 31
     private Engine game;
- 
+    public Point adjustedHitbox;
+    
     public Collision(Engine e) {
         game = e;
     }
@@ -303,8 +305,54 @@ public class Collision { // 64 31
         }
     }
     
+    /*
+	 * UPDATES EVERY BULLET'S POSITION THAT ARE IN THE ARRAYLIST
+	 * AND ALSO CHECKS FOR IF THE BULLET HAS HIT A POLICE IN 
+	 * THE POLICE ARRAY
+	 * IF SO, THE POLICE AND THE BULLET GETS REMOVE FROM THEIR
+	 * ARRAYLIST
+	 */  
     public void checkBulletCollision() {
-    	
+		if (game.bullets.size() > 0) {
+			for (int i = 0; i < game.bullets.size(); i ++) {
+				boolean flag = false;
+				game.bullets.get(i).updatePos();
+				if (game.police.length > 0 && game.bullets.size() > 0) {
+					for (int j = 0; j < game.police.length; j ++) {
+						if (game.police[j] != null) 
+							adjustedHitbox = new Point(game.police[j].playerPos.x + 6, game.police[j].playerPos.y + 23 );
+						if (game.police[j] != null && game.bullets.get(i).bulletPos.isNear(adjustedHitbox, 20)) {
+							game.bullets.remove(i);
+							game.police[j] = null;
+							game.player.isRobbing = true;
+							i--;
+							flag = true;
+							break;
+						}
+					}
+					if (!flag && (game.level.levelStage != 0 && game.level.levelStage != 5)) {
+						for (int k = 0; k < game.civilian.size(); k ++) {
+							if (game.bullets.get(i).bulletPos.isNear(game.civilian.get(k).playerPos, 20)) {
+								game.bullets.remove(i);
+								game.civilian.remove(k);
+								game.player.money -= 5000;
+								game.player.isRobbing = true;
+								k--;
+								i--;
+								flag = true;
+								break;
+							}
+						}
+					}
+				}
+				if (!flag) {
+					if (game.bullets.get(i).isBulletFinished()) {
+						game.bullets.remove(i);
+						i--;
+					}
+				}			
+			}
+		}
     }
     
     

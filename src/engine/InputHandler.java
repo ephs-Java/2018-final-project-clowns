@@ -25,6 +25,7 @@ public class InputHandler implements KeyListener, MouseListener {
 	public Key left = new Key();
 	public Key right = new Key();
 	public Key space = new Key();
+	public Key shift = new Key();
 
 	public InputHandler(Engine e) {
 		game = e;
@@ -48,29 +49,7 @@ public class InputHandler implements KeyListener, MouseListener {
 	public void keyTyped(KeyEvent arg0) {
 	}
 
-	// public void checkInput() {
-	// /*
-	// * All if statements so it can handle
-	// * diagonal movement.
-	// */
-	// if (game.input.up.isPressed()) {
-	// game.player.y -= game.player.speed;
-	// }
-	// if (game.input.down.isPressed()) {
-	// game.player.y += game.player.speed;
-	// }
-	// if (game.input.left.isPressed()) {
-	// game.player.x -= game.player.speed;
-	// }
-	// if (game.input.right.isPressed()) {
-	// game.player.x += game.player.speed;
-	//
-	// }
-	// }
-
 	public void checkInput() {
-		//System.out.println(game.level.levelStage);
-		//System.out.println("pos; " + game.player.x + ", " + game.player.y);
 		if (this.up.isPressed()) {
 			// System.out.println("UP");
 			if (game.level.levelStage == 0) {
@@ -125,6 +104,14 @@ public class InputHandler implements KeyListener, MouseListener {
 			}
 		}
 		
+		if (this.shift.isPressed()) {
+			
+			game.player.canShoot = false;
+			isMoney(getMouseClickPos().getX(), getMouseClickPos().getY());
+		} else {
+			game.player.canShoot = true;
+		}
+		
 	}
 
 	public void toggleKey(int keyCode, boolean state) {
@@ -132,7 +119,6 @@ public class InputHandler implements KeyListener, MouseListener {
 		if (keyCode == KeyEvent.VK_W) {
 			changeWalk(state);
 			this.up.toggle(state);
-
 		}
 		if (keyCode == KeyEvent.VK_S) {
 			changeWalk(state);
@@ -150,6 +136,9 @@ public class InputHandler implements KeyListener, MouseListener {
 		}
 		if (keyCode == KeyEvent.VK_SPACE) {
 			this.space.toggle(state);
+		}
+		if (keyCode == KeyEvent.VK_SHIFT) {
+			this.shift.toggle(state);
 		}
 	}
 
@@ -170,10 +159,15 @@ public class InputHandler implements KeyListener, MouseListener {
 				game.player.hasKeyCard = true;
 			}
 		}
-		//System.out.println(game.gui.seconds + " " + game.gui.prev_sec);
-		if (Math.abs(game.gui.seconds - game.gui.prev_sec) >= 1) {
-			game.bullets.add(new Bullet(playerPos, mouseClickPos));
-			game.gui.prev_sec = game.gui.seconds;
+		
+		/*
+		 * PLAYER ONLY ALLOWED TO SHOOT ONCE PER SECOND
+		 */
+		if (!this.shift.isPressed()) {
+			if (Math.abs(game.gui.seconds - game.gui.prev_sec) >= 1) {
+				game.bullets.add(new Bullet(playerPos, mouseClickPos));
+				game.gui.prev_sec = game.gui.seconds;
+			}
 		}
 		game.level.randomPoliceSpawn();
 	}
@@ -207,7 +201,6 @@ public class InputHandler implements KeyListener, MouseListener {
 					game.level.moneyLocationList.remove(index);
 					game.player.money += 3250;
 					i--;
-
 					return true;
 				}
 			}
@@ -222,13 +215,6 @@ public class InputHandler implements KeyListener, MouseListener {
 	public void setIndex(int index) {
 		this.index = index;
 	}
-
-	public boolean canDrill() {
-		if (isVault(mouseClickPos.getX(), mouseClickPos.getY()) && (game.vTicks > 630)) {
-			return true;
-		}
-		return false;
-	}
 	
 	public Point getMouseClickPos() {
         return mouseClickPos;
@@ -238,7 +224,6 @@ public class InputHandler implements KeyListener, MouseListener {
         this.mouseClickPos = mouseClickPos;
     }
  
-    // 992, 157
     public Engine getGame() {
         return game;
     }

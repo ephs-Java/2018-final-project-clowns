@@ -59,27 +59,21 @@ public class Level {
 		game = e;
 		
 		levelStage = 0;
-	//	lvl1s0  = new SpriteSheet("resource\\level\\level_1.png");
 		lvl1s0 = new SpriteSheet("level_1.png");
 		lvl1s0_image = lvl1s0.getSprite(0, 0, 1024, 640);
 		
-		//lvl1s1 = new SpriteSheet("resource\\level\\lvl1s1.png");
 		lvl1s1 = new SpriteSheet("lvl1s1.png");
 		lvl1s1_image = lvl1s1.getSprite(0, 0, 1024, 640);
 		
-		//lvl1s2 = new SpriteSheet("resource\\level\\lvl1s2.png");
 		lvl1s2 = new SpriteSheet("lvl1s2.png");
 		lvl1s2_image = lvl1s2.getSprite(0, 0, 1024, 640);
 		
-		//lvl1s25 = new SpriteSheet("resource\\level\\lvl1s25.png");
 		lvl1s25 = new SpriteSheet("lvl1s25.png");
 		lvl1s25_image = lvl1s25.getSprite(0, 0, 1024, 640);
 		
-		//lvl1s3 = new SpriteSheet("resource\\level\\lvl1s3.png");
 		lvl1s3 = new SpriteSheet("lvl1s3.png");
 		lvl1s3_image = lvl1s3.getSprite(0, 0, 1024, 640);
 		
-		//lvl1s4 = new SpriteSheet("resource\\level\\lvl1s4.png");
 		lvl1s4 = new SpriteSheet("lvl1s4.png");
 		lvl1s4_image = lvl1s4.getSprite(0, 0, 1024, 640);
 		
@@ -101,13 +95,13 @@ public class Level {
 		civilianLocationList = new ArrayList<Point>();
 		policeLocationList = new ArrayList<Point>();
 		fillLists();
-		for (int i = 0; i < 4; i ++) {
+		
+		for (int i = 0; i < 4; i ++) 
 			game.civilian.add(new Civilian(game, civilianLocationList.get(i).x, civilianLocationList.get(i).y));
-		}
-		for (int i = 0; i < 3; i ++) {
-			//game.police1.add(new Police(game, policeLocationList.get(i).x, policeLocationList.get(i).y));
+		
+		for (int i = 0; i < 3; i ++) 
 			game.police[i] = new Police(game, policeLocationList.get(i).x, policeLocationList.get(i).y);
-		}
+		
 		game.police[0].setPatroleType(0);
 		game.police[1].setPatroleType(1);
 		game.police[2].setPatroleType(2);
@@ -115,10 +109,7 @@ public class Level {
 		r = new Random();
 		
 	}
-	//never called
-	public void drawLevel(BufferStrategy bs) {
-			
-	}
+
 	public void render(BufferStrategy bs) {
 		
 		Graphics tileGridBackground = bs.getDrawGraphics();
@@ -143,11 +134,11 @@ public class Level {
 		 * Once the player aquires the keycard, the position 
 		 * is changed to show the player has posession of the card.
 		 */
-		if (!game.player.hasKeyCard && (this.levelStage == 3 || this.levelStage == 4)) {
+		if (!game.player.hasKeyCard && (this.levelStage == 3 || this.levelStage == 4))
 			money.drawImage(keyCard_image, 257, 200, null);
-		} else if (game.player.hasKeyCard){
+		 else if (game.player.hasKeyCard)
 			money.drawImage(keyCardBig_image, 943, 585, null);
-		}
+		
 		
 		
 		
@@ -156,16 +147,11 @@ public class Level {
 		 * only if the current level stage is 5
 		 */
 		if (this.levelStage == 5) {
-			for (int i = 0; i < moneyLocationList.size(); i ++) {
+			for (int i = 0; i < moneyLocationList.size(); i ++) 
 				money.drawImage(moneyBag_image, moneyLocationList.get(i).x, moneyLocationList.get(i).y, null);
-			}
 		}
-	
-		//bs.show();
+		
 		tileGridBackground.dispose();
-		
-		
-
 	}
 	
 	public void fillLists() {
@@ -192,9 +178,7 @@ public class Level {
 		policeLocationList.add(new Point(420, 350));
 		policeLocationList.add(new Point(520, 350));
 		policeLocationList.add(new Point(100, 520));
-		
-		//System.out.println(moneyLocationList.get(0));
-		
+			
 	}
 	
 	public void randomPoliceSpawn() {
@@ -202,9 +186,7 @@ public class Level {
 		int h = r.nextInt(game.HEIGHT - 150);
 		int index = r.nextInt(game.police.length - 3) + 3;
 		
-		System.out.println(w + "x" + h + " index: " + index);
 		if (game.police[index] == null) {
-			System.out.println("new popo");
 			game.police[index] = new Police(game, w, h);
 		}
 	}

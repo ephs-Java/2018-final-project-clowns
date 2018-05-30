@@ -18,42 +18,30 @@ import people.Player;
 import people.Police;
 
 public class Engine extends Canvas implements Runnable {
-	//try 2
+
 	public static final int WIDTH = 1024;
 	public static final int HEIGHT = 640;
 	
 	public JFrame window;
 	public JLabel label;
 	private boolean running = false;
-	public boolean isRunning() {
-		return running;
-	}
 
-	public void setRunning(boolean running) {
-		this.running = running;
-	}
-
-	public Player player;
-	
 	public ArrayList<Civilian> civilian;
 	public Police[] police;
 	public ArrayList<Bullet> bullets;
 	
 	public Graphics g;
-	
+	public Player player;
 	public Collision col;
 	public InputHandler input;
 	public Level level;
 	public GUI gui;
 	public Camera camera;
 	
-	public int vTicks;
-	
-	public int x, y = 0;
 	public int ticks, render;
 	
 	public BufferStrategy bs;
-	public BufferStrategy bs_two;
+
 	
 	public Engine() {
 
@@ -116,26 +104,16 @@ public class Engine extends Canvas implements Runnable {
 		
 	
 		while (running) {
-
 			long now = System.nanoTime();
 			deltaTime += (now - lastTime) / nsecPerTick;
 			lastTime = now;
-
 			boolean shouldRender = true;
-
 			while (deltaTime >= 1) {
 				ticks++;
 				tick(ticks);
 				deltaTime -= 1;
 				shouldRender = true;
 			}
-
-//			try {
-//				Thread.sleep(2);
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
 
 			if (shouldRender) {
 				frames++;
@@ -159,14 +137,7 @@ public class Engine extends Canvas implements Runnable {
 	 
 	public void tick(int ticks) {
 		input.checkInput();
-		if (camera.getcTicks() < 1000) {
-			camera.isAlarm();
-		} else {
-			gui.alarmMessage = "ALARM! ALARM!";
-			player.isRobbing = true;
-		}
-		//System.out.print(camera.isAlarm());
-	   // System.out.print(camera.getcTicks());
+		camera.updateAlarm();
 		gui.updateTime(ticks);
 		
 		//UPDATES MOVEMENT ANIMATIONS FOR EACH SPRITE
@@ -185,60 +156,12 @@ public class Engine extends Canvas implements Runnable {
 					police[i].move(ticks);
 		}
 		player.move(ticks);
-		
-		
-		/*
-		 * UPDATES EVERY BULLET'S POSITION THAT ARE IN THE ARRAYLIST
-		 * AND ALSO CHECKS FOR IF THE BULLET HAS HIT A POLICE IN 
-		 * THE POLICE ARRAY
-		 * IF SO, THE POLICE AND THE BULLET GETS REMOVE FROM THEIR
-		 * ARRAYLIST
-		 */
-		if (this.bullets.size() > 0) {
-			for (int i = 0; i < this.bullets.size(); i ++) {
-				boolean flag = false;
-				this.bullets.get(i).updatePos();
-				if (police.length > 0 && bullets.size() > 0) {
-					for (int j = 0; j < police.length; j ++) {
-						if (police[j] != null && bullets.get(i).bulletPos.isNear(police[j].playerPos, 20)) {
-							bullets.remove(i);
-							police[j] = null;
-							//System.out.println("died");
-							player.isRobbing = true;
-							i--;
-							flag = true;
-							break;
-						}
-					}
-					if (!flag && (level.levelStage != 0 && level.levelStage != 5)) {
-						for (int k = 0; k < civilian.size(); k ++) {
-							if (bullets.get(i).bulletPos.isNear(civilian.get(k).playerPos, 20)) {
-								bullets.remove(i);
-								civilian.remove(k);
-								player.money -= 5000;
-								player.isRobbing = true;
-								k--;
-								i--;
-								flag = true;
-								break;
-							}
-						}
-					}
-				}
-				if (!flag) {
-					if (this.bullets.get(i).isBulletFinished()) {
-						this.bullets.remove(i);
-						i--;
-					}
-				}			
-			}
-		}	
+		col.checkBulletCollision();
 	}
  
 	public void render(int ticks) {
 		g = bs.getDrawGraphics();
 		level.render(bs);
-		
 		gui.render(bs, g);
 		player.render(bs, g);
 		
@@ -268,26 +191,32 @@ public class Engine extends Canvas implements Runnable {
 				this.bullets.get(i).render(bs, g);
 			}
 		}
-		//SHOWS CURRENT PLAYER COORDINATES ON SCREEN
 		gui.debugMode(bs, g);
 		bs.show();
 		g.dispose();
 		
 	}
+	public boolean isRunning() {
+		return running;
+	}
+
+	public void setRunning(boolean running) {
+		this.running = running;
+	}
 
 	/**
 	 * TODO:
-	 * 	Trigger robbing mode
-	 * 	Cops can arrest player (1)
-	 * 	can shoot civilians but lose money
-	 * 	Implement and use the alarm system with cameras (2)
+	 * 	Trigger robbing mode - DONE
+	 * 	Cops can arrest player (1) - DONE
+	 * 	can shoot civilians but lose money - DONE
+	 * 	Implement and use the alarm system with cameras (2) - KINDA DONE
 	 * 	Other sounds
 	 * 	Update graphics and level designs
-	 * 	Civilians run away if Player is in robbing mode
+	 * 	Civilians run away if Player is in robbing mode - KINDA DONE
 	 * 	Better graphics interface
-	 * 	Police response system
+	 * 	Police response system - KINDA DONE
 	 * BUGS: 
-	 * 	INVISIBLE COPS IN FIRST STAGE
+	 * 	INVISIBLE COPS IN FIRST STAGE - NOT FIXED
 	 */
 
 }

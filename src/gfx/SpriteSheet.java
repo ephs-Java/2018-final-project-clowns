@@ -36,7 +36,6 @@ public class SpriteSheet {
 		}
 	}
 	/**
-	 * 
 	 * @param x
 	 * 	Starting X value on the image file where the user
 	 *  wants to read from.
@@ -58,11 +57,4 @@ public class SpriteSheet {
 		BufferedImage sprite = this.spriteSheet.getSubimage(x, y, width, height);
 		return sprite;
 	}
-	
-	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
-
 }

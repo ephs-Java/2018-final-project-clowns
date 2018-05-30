@@ -15,7 +15,7 @@ public class Player extends People{
 	public int height;
 	public boolean isRobbing;
 	public boolean hasKeyCard;
-	public Shoot shoot;
+	public boolean canShoot;
 	public BufferedImage playerSprite;
 	public Point currentPos;
 	
@@ -25,7 +25,7 @@ public class Player extends People{
 		//super(100, 100, 200, 2, false, false, true, "raptor_32x32.png" );
 		game = e;
 		currentPos = new Point(this.x, this.y);
-		this.shoot = new Shoot(game);
+		this.canShoot = false;
 		this.isRobbing = false;
 		this.hasKeyCard = false;
 		//this.playerSprite = this.spriteSheet.getSprite( 0, 114, 12, 57);
