@@ -18,7 +18,7 @@ import people.Player;
 import people.Police;
 
 public class Engine extends Canvas implements Runnable {
-
+	//try 2
 	public static final int WIDTH = 1024;
 	public static final int HEIGHT = 640;
 	
