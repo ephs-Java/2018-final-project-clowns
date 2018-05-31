@@ -194,7 +194,6 @@ public class Engine extends Canvas implements Runnable {
 		gui.debugMode(bs, g);
 		bs.show();
 		g.dispose();
-		
 	}
 	public boolean isRunning() {
 		return running;

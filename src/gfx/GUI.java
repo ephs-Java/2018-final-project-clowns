@@ -21,6 +21,9 @@ public class GUI {
 	public String message1;
 	public String message2;
 	public String message3;
+	public String message4;
+	public String message5;
+	public String message6;
 	public String alarmMessage;
 	public String gameOverMessage;
 	
@@ -36,7 +39,11 @@ public class GUI {
 		this.timerState = "Start";
 		this.message1 = "";
 		this.message2 = "";
-		this.message3 = "";
+		this.message6 = "BUG: invisible cops on first level.";
+		//this.message3 = "";
+		this.message3 = "You are a robber about to rob a bank";
+        this.message4 = "You have a gun and watch out for the cops";
+        this.message5 = "You have to find the keycard, get the money, and get out";
 		this.alarmMessage = "ALARM:";
 		this.gameOverMessage = "";
 	}
@@ -66,7 +73,10 @@ public class GUI {
 		topGui.drawString(message1, 18 , 625);
 		topGui.setFont(new Font("Arial", Font.BOLD, 16));
 		topGui.drawString(message2, 813 , 330);
-		
+		topGui.drawString(message3, 300, 360);
+	    topGui.drawString(message4, 300, 380);
+	    topGui.drawString(message5, 300, 400);
+	    topGui.drawString(message6, 300, 420);
 		topGui.setFont(new Font("Arial", Font.BOLD, 80));
 		topGui.setColor(Color.black);
 		topGui.drawString(gameOverMessage, 250 , 300);
@@ -98,6 +108,12 @@ public class GUI {
 			minutes ++;
 			seconds = 0;
 		}
+		if(seconds == 10) {
+	        message3 = "";
+	        message4 = "";
+	        message5 = "";
+	        message6 = "";
+	    }
 	}
 	
 	

@@ -75,7 +75,7 @@ public class People {
 			else 
 				return this.spriteSheet.getSprite(faceLeft[0], faceLeft[1], faceLeft[2], faceLeft[3]);
 		}
-	}//
+	}
 	
 	public void isNear(People other) {
 		if (distance(other) < 40){
